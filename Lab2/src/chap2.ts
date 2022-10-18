@@ -73,3 +73,93 @@ interface Cylinder {
 }
 const Cylinder = (radius: number, height: number) => ({radius, height});
 console.log(Cylinder(10, 5));
+
+interface Vector1D { x: number; }
+interface Vector2D extends Vector1D { y: number; }
+interface Vector3D extends Vector2D { z: number; }
+
+// = is value declaration, : is type declaration
+interface Person1 { // TYPE
+    first: string;
+    last: string;
+}
+const p: Person1 = { first: 'Jane', last: 'Jacobs' };
+// ------Type----||--------------Value---------------
+type T1 = typeof p; // type is Person1
+const v1 = typeof p; // value is object
+
+class Cylinder1 {
+    radius=1;
+    height=1;
+}
+const v = typeof Cylinder1; // Value is "function"
+
+type T2 = typeof Cylinder1; // Type is typeof Cylinder
+declare let fn: T2;
+//const c1 = new fn();
+
+type C = InstanceType<typeof Cylinder1>;
+
+// Item 9
+interface Person9 { name: string };
+const alice: Person9 = { name: 'Alice' }; // Type is Person
+//const bob = { name: 'Bob' } as Person9;
+
+//const alice: Person = {};
+ // ~~~~~ Property 'name' is missing in type '{}'
+ // but required in type 'Person'
+
+const bob = {} as Person;
+
+const people = ['alice', 'bob', 'jan'].map(name => {
+    const person: Person = {name};
+    return person
+});
+const people2 = ['alice', 'bob', 'jan'].map(
+    (name): Person => ({name})
+);
+
+interface Person { name: string; }
+//const body = document.body;
+//const body = document.body as unknown;
+//const el = body as Person;
+
+//const el1 = document.body as unknown as Person; // OK
+
+console.log('primitive'.charAt(3));
+
+const surfaceArea = (r: number, h: number) => 2 * Math.PI * r * (r + h);
+const volume = (r: number, h: number) => Math.PI * r * r * h;
+for (const [r, h] of [[1, 1], [1, 2], [2, 1]]) {
+ console.log(
+ `Cylinder ${r} x ${h}`,
+ `Surface area: ${surfaceArea(r, h)}`,
+ `Volume: ${volume(r, h)}`);
+}
+
+interface Rocket {
+    name: string;
+    variant: string;
+    thrust_kN: number;
+}
+const falconHeavy: Rocket = {
+    name: 'Falcon Heavy',
+    variant: 'v1',
+    thrust_kN: 15_200
+};
+
+interface State {
+    userId: string;
+    pageTitle: string;
+    recentFiles: string[];
+    pageContents: string;
+}
+// type TopNavState = {
+//     userId: State['userId'];
+//     pageTitle: State['pageTitle'];
+//     recentFiles: State['recentFiles'];
+// };
+type TopNavState = {
+    [k in 'userId' | 'pageTitle' | 'recentFiles']: State[k]
+};
+   

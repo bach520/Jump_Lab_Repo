@@ -18,3 +18,39 @@ const ab12 = ab; // OK, {"A", "B"} is a subset of {"A", "B", 12}
 const triple = [1, 2, 3];
 const Cylinder = (radius, height) => ({ radius, height });
 console.log(Cylinder(10, 5));
+const p = { first: 'Jane', last: 'Jacobs' };
+const v1 = typeof p; // value is object
+class Cylinder1 {
+    constructor() {
+        this.radius = 1;
+        this.height = 1;
+    }
+}
+const v = typeof Cylinder1; // Value is "function"
+;
+const alice = { name: 'Alice' }; // Type is Person
+//const bob = { name: 'Bob' } as Person9;
+//const alice: Person = {};
+// ~~~~~ Property 'name' is missing in type '{}'
+// but required in type 'Person'
+const bob = {};
+const people = ['alice', 'bob', 'jan'].map(name => {
+    const person = { name };
+    return person;
+});
+const people2 = ['alice', 'bob', 'jan'].map((name) => ({ name }));
+//const body = document.body;
+//const body = document.body as unknown;
+//const el = body as Person;
+//const el1 = document.body as unknown as Person; // OK
+console.log('primitive'.charAt(3));
+const surfaceArea = (r, h) => 2 * Math.PI * r * (r + h);
+const volume = (r, h) => Math.PI * r * r * h;
+for (const [r, h] of [[1, 1], [1, 2], [2, 1]]) {
+    console.log(`Cylinder ${r} x ${h}`, `Surface area: ${surfaceArea(r, h)}`, `Volume: ${volume(r, h)}`);
+}
+const falconHeavy = {
+    name: 'Falcon Heavy',
+    variant: 'v1',
+    thrust_kN: 15200
+};
