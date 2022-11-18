@@ -9,6 +9,7 @@ namespace Project2.Models
     public class Student
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "ID")]
         [Remote("IDExists", "Student", ErrorMessage = "ID already exists")]
         [RegularExpression(@"^(\d{6})$", ErrorMessage = "Student ID must be 6-digit numbers")]
@@ -35,7 +36,7 @@ namespace Project2.Models
 
     public enum Grade
     {
-        None,
+        N,
         A,
         B,
         C,

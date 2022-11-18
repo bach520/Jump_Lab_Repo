@@ -38,7 +38,7 @@ namespace Project2.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Grade")
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -51,9 +51,7 @@ namespace Project2.Migrations
 
                     b.ToTable("Student");
                 });
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+            
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 

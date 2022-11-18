@@ -21,7 +21,7 @@ namespace Project2.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Grade = table.Column<string>(type: "nvarchar(1)", nullable: true)
+                    Grade = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

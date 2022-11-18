@@ -1,4 +1,5 @@
-﻿using Project2.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Project2.Data;
 using Project2.Models;
 using Project2.Repository.IRepository;
 using System.Linq.Expressions;
@@ -23,7 +24,13 @@ namespace Project2.Repository
         }
         void IStudentRepository.Save()
         {
-            _context.SaveChanges();
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Student ON;");
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Student OFF;");
+                transaction.Commit();
+            }
         }
         public bool IDNotExist(int Id)
         {
