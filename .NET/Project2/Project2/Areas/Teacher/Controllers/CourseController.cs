@@ -71,12 +71,8 @@ namespace Project2.Areas.Teacher.Controllers
             {
                 _db.Insert(course);
                 _db.Save();
-                TempData["success"] = "Student added successfully";
+                TempData["success"] = "Course added successfully";
                 return RedirectToAction(nameof(Index));
-            }
-            else
-            {
-                ModelState.AddModelError("CustomError", "Student ID must be 6-digit numbers");
             }
             return View(course);
         }

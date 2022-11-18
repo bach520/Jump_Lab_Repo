@@ -37,10 +37,10 @@ namespace Project2.Repository
             dbSet.Add(item);
         }
 
-        public void Update(T item)
+        /*public void Update(T item)
         {
             dbSet.Update(item);
-        }
+        }*/
 
         T IRepository<T>.GetFirstOrDefault(Expression<Func<T, bool>> filter)
         {

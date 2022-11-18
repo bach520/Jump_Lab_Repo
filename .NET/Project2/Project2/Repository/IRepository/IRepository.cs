@@ -10,7 +10,7 @@ namespace Project2.Repository
 
         IEnumerable<T> GetAll();
         void Insert(T item);
-        void Update(T item);
+        //void Update(T item);
         void Delete(T item);
         //void Save();
         void RemoveRange(IEnumerable<T> items);

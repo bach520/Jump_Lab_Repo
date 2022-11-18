@@ -27,7 +27,7 @@ namespace Project2.Migrations
                 {
                     table.PrimaryKey("PK_Student", x => x.Id);
                 });
-            migrationBuilder.CreateTable(
+            /*migrationBuilder.CreateTable(
                 name: "Course",
                 columns: table => new
                 {
@@ -39,7 +39,7 @@ namespace Project2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Course", x => x.Id);
-                });
+                });*/
         }
 
         /// <inheritdoc />
@@ -47,8 +47,8 @@ namespace Project2.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Student");
-            migrationBuilder.DropTable(
-                name: "Course");
+            /*migrationBuilder.DropTable(
+                name: "Course");*/
         }
     }
 }
