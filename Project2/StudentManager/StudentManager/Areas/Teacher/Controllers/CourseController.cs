@@ -1,6 +1,7 @@
 ﻿using StudentManager.Models;
 using StudentManager.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace StudentManager.Areas.Teacher.Controllers
 {
@@ -8,10 +9,12 @@ namespace StudentManager.Areas.Teacher.Controllers
     public class CourseController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotyfService _toastNotification;
 
-        public CourseController(IUnitOfWork unitOfWork)
+        public CourseController(IUnitOfWork unitOfWork, INotyfService toastNotification)
         {
             _unitOfWork = unitOfWork;
+            _toastNotification = toastNotification;
         }
 
         public IActionResult Index()
@@ -35,6 +38,7 @@ namespace StudentManager.Areas.Teacher.Controllers
                 _unitOfWork.Course.Add(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Course added successfully";
+                _toastNotification.Success("Course added successfully");
                 return RedirectToAction("Index", "TeacherHome", new { area = "Teacher" });
             }
 
@@ -67,6 +71,7 @@ namespace StudentManager.Areas.Teacher.Controllers
                 _unitOfWork.Course.Update(obj);
                 _unitOfWork.Save();
                 TempData["success"] = "Course edited successfully";
+                _toastNotification.Success("Course added successfully");
                 return RedirectToAction("Index");
             }
 
@@ -104,6 +109,7 @@ namespace StudentManager.Areas.Teacher.Controllers
             _unitOfWork.Course.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = "Course deleted successfully";
+            _toastNotification.Success("Course added successfully");
             return RedirectToAction("Index");
         }
     }

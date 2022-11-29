@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -16,10 +17,12 @@ namespace StudentManager.Controllers
     public class StudentController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly INotyfService _toastNotification;
 
-        public StudentController(IUnitOfWork unitOfWork)
+        public StudentController(IUnitOfWork unitOfWork, INotyfService toastNotification)
         {
             _unitOfWork = unitOfWork;
+            _toastNotification = toastNotification;
         }
         public JsonResult IDExists(int id)
         {
@@ -67,6 +70,7 @@ namespace StudentManager.Controllers
                 _unitOfWork.Student.Add(student);
                 _unitOfWork.Save();
                 TempData["success"] = "Student added successfully";
+                _toastNotification.Success("Student added successfully");
                 return RedirectToAction("Index");
             }
 
@@ -107,6 +111,7 @@ namespace StudentManager.Controllers
                 _unitOfWork.Student.Update(student);
                 _unitOfWork.Save();
                 TempData["success"] = "Student edited successfully";
+                _toastNotification.Success("Student edited successfully");
                 return RedirectToAction("Index");
             }
             return View(student);
@@ -143,6 +148,7 @@ namespace StudentManager.Controllers
             _unitOfWork.Student.Remove(student);
             _unitOfWork.Save();
             TempData["success"] = "Student deleted successfully";
+            _toastNotification.Success("Student deleted successfully");
             return RedirectToAction("Index");
         }
     }

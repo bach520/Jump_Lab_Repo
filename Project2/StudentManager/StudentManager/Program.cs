@@ -2,8 +2,18 @@ using StudentManager.Repository.IRepository;
 using StudentManager.Repository;
 using Microsoft.EntityFrameworkCore;
 using StudentManager.Data;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add ToastNotification
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -53,5 +63,6 @@ app.UseEndpoints(endpoints =>
     );
 });
 
+app.UseNotyf();
 
 app.Run();
