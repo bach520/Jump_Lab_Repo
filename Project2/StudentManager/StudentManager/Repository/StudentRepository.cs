@@ -14,10 +14,10 @@ namespace StudentManager.Repository
         {
             _db = context;
         }
-        void IStudentRepository.Update(Student student)
+        /*void IStudentRepository.Update(Student student)
         {
             _db.Student.Update(student);
-        }
+        }*/
         public bool IDNotExist(int Id)
         {
             return !_db.Student.Any(x => x.Id == Id);

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 using StudentManager.Data;
 using StudentManager.Models;
 using StudentManager.Repository;
@@ -23,10 +25,6 @@ namespace StudentManager.Controllers
         {
             _unitOfWork = unitOfWork;
             _toastNotification = toastNotification;
-        }
-        public JsonResult IDExists(int id)
-        {
-            return Json(_unitOfWork.Student.IDNotExist(id));
         }
         // GET: Student
         public IActionResult Index()
@@ -55,7 +53,17 @@ namespace StudentManager.Controllers
         // GET: Student/Create
         public IActionResult Create()
         {
+            ViewBag.drpCourses = PopulateCourseList();
             return View();
+        }
+
+        public List<Course> PopulateCourseList()
+        {
+            List<Course> courseList = new List<Course>();
+            courseList = (from c in _unitOfWork.Course.GetAll() select c).ToList();
+            //courseList.Insert(0, new Course { Id = 0, CourseName = "--Select Course Name--" });
+
+            return courseList;
         }
 
         // POST: Student/Create
@@ -63,8 +71,19 @@ namespace StudentManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("FirstName,LastName,MiddleName,DOB,Grade")] Student student)
+        public IActionResult Create(/*[Bind("FirstName,LastName,MiddleName,DOB,Grade")]*/ Student student)
         {
+            if (student.SelectedCourses != null)
+            {
+                int i = 0;
+                foreach (var id in student.SelectedCourses)
+                {
+                    if (i > 0) student.StringOfCourses += ", ";
+                    i++;
+                    student.StringOfCourses += _unitOfWork.Course.GetFirstOrDefault(u => u.Id == id).CourseName;
+                }
+            }
+            
             if (ModelState.IsValid)
             {
                 _unitOfWork.Student.Add(student);
@@ -91,6 +110,8 @@ namespace StudentManager.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.drpCourses = PopulateCourseList();
             return View(studentFromDb);
         }
 
@@ -105,6 +126,17 @@ namespace StudentManager.Controllers
             {
                 return NotFound();
             }*/
+            if (student.SelectedCourses != null)
+            {
+                int i = 0;
+                foreach (var courseId in student.SelectedCourses)
+                {
+                    if (i > 0) student.StringOfCourses += ", ";
+                    i++;
+                    student.StringOfCourses += _unitOfWork.Course.GetFirstOrDefault(u => u.Id == courseId).CourseName;
+                }
+            }
+
 
             if (ModelState.IsValid)
             {

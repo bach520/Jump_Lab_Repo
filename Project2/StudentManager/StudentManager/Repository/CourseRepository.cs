@@ -15,12 +15,7 @@ namespace StudentManager.Repository
 
         public void UpdateStudentCount()
         {
-            
-        }
-
-        void ICourseRepository.Update(Course course)
-        {
-            _db.Course.Update(course);
+            throw new NotImplementedException();
         }
     }
 }

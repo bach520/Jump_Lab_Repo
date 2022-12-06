@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,7 +29,11 @@ namespace StudentManager.Models
         public DateTime? DOB { get; set; }
 
         public string? Grade { get; set; }
-        //public virtual ICollection<Course> Courses{ get; set; }
+        [NotMapped]
+        public int[]? SelectedCourses { get; set; }
+        [Display(Name = "Enroll Courses")]
+        public string? StringOfCourses { get; set; }
+        //public virtual SelectList courseList{ get; set; }
     }
 
     public enum Grade

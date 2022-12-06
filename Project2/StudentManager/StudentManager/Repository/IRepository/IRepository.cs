@@ -12,6 +12,8 @@ namespace StudentManager.Repository
 
         void Add(T item);
 
+        void Update(T item);
+
         void Remove(T item);
 
         void RemoveRange(IEnumerable<T> items);

@@ -40,6 +40,14 @@
                 <span asp-validation-for="Grade" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="StringOfCourses" class="control-label"></label>
+                <br />
+                @Html.ListBoxFor(m => m.SelectedCourses,
+                new MultiSelectList(@ViewBag.drpCourses,"Id","CourseName"),
+                new { @class="form-control" })
+                <span asp-validation-for="StringOfCourses" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>

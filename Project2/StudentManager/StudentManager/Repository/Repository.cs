@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StudentManager.Data;
+using StudentManager.Models;
+using StudentManager.Repository.IRepository;
 using System.Linq.Expressions;
 
 namespace StudentManager.Repository
@@ -19,7 +21,10 @@ namespace StudentManager.Repository
         {
             dbSet.Add(item);
         }
-
+        void IRepository<T>.Update(T item)
+        {
+            dbSet.Update(item);
+        }
         IEnumerable<T> IRepository<T>.GetAll()
         {
             IQueryable<T> query = dbSet;
